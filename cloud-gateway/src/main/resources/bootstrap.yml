@@ -13,6 +13,31 @@ spring:
       config:
         server-addr: 127.0.0.1:8848
         file-extension: yml
+        # 共享配置(可以多个,与其他服务共享使用nacos某个配置)
+        shared-configs[0]:
+          data-id: application-${spring.profiles.active}.yml # 配置文件名-Data Id
+          group: DEFAULT_GROUP   # 默认为DEFAULT_GROUP
+          refresh: true   # 是否动态刷新，默认为false
+    sentinel:
+      # 取消控制台懒加载
+      eager: true
+      transport:
+        # 控制台地址
+        dashboard: 127.0.0.1:9080
+      # nacos配置持久化,此处需注意:
+      # (1)在nacos创建默认配置sentinel-gateway,创建规则;
+      # (2)启动sentinel控制台后,可直接看到已经生效的配置;
+      # (3)想要动态修改限流配置的话,需要从nacos修改后,sentinel自动生效;
+      # (4)反向操作则只更改当前限流规则,不会修改nacos的配置文件
+      datasource:
+        ds1:
+          nacos:
+            server-addr: 127.0.0.1:8848
+            dataId: sentinel-gateway
+            groupId: DEFAULT_GROUP
+            data-type: json
+            rule-type: flow
 
-
+server:
+  port: 8080
 
