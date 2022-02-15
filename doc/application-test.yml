@@ -12,12 +12,6 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
-  cloud:
-    sentinel:
-      filter:
-        # sentinel 在 springboot 2.6.x 不兼容问题的处理
-        enabled: false
-
 # feign 配置
 feign:
   sentinel:

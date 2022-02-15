@@ -13,7 +13,8 @@ public class EchoController {
 
 
     @GetMapping("echo2")
-    public String echo2(){
+    public String echo2() throws InterruptedException {
+        Thread.sleep(2000);
         return "this is auth2";
     }
 }

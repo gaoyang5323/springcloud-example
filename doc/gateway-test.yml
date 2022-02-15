@@ -1,6 +1,17 @@
 spring:
   cloud:
     gateway:
+      #设置跨域
+      corsConfigurations:
+        '[/**]':
+          allowCredentials: true
+          allowedHeaders: '*'
+          allowedMethods: '*'
+          allowedOrigins: '*'
+      #全局响应超时配置,默认没有超时时间
+      #httpclient:
+      #  connect-timeout: 1000
+      #  response-timeout: 1s
       discovery:
         locator:
           #将请求路径上的服务名配置为小写(因为服务注册的时候,向注册中心注册时将服务名转成大写)
@@ -8,16 +19,44 @@ spring:
           #启用了自动根据服务ID建立路由
           enabled: true
       routes:
-        - id: auth
+        - id: order
+          uri: lb://order
+          predicates:
+            - Path=/order/**
+          filters:
+            - StripPrefix=1
+
+        - id: user
           #由于springcloud2020弃用了Ribbon，因此Alibaba在2021版本nacos中删除了Ribbon的jar包，因此无法通过lb路由到指定微服务，出         #现了503情况;需要引入springcloud loadbalancer包
-          uri: lb://auth
+          uri: lb://user
           #当Path=/**,并且去除StripPrefix;则访问/auth/echo能成功,并且直接访问/echo都能成功访问auth服务;
           #当Path=/**,使用StripPrefix=1时,会自动去除前一个路径,则访问/auth/echo变成/echo;但是如果访问/xxx/echo,一样会访问到auth服务;
           #使用Path=/auth/**,则仅限/auth/**的路径;
           predicates:
-            - Path=/auth/**
+            - Path=/user/**
+          #单独设置超时
+          #metadata:
+          #  response-timeout: 200
+          #  connect-timeout: 200
           #网关过滤器
           filters:
             #表示在将请求发送到下游之前从请求中剥离的路径个数,也可以使用RewritePath;都是修改原始路径访问到下游服务;
             #- RewritePath=/auth/(?<segment>.*), /$\{segment}
             - StripPrefix=1
+            #重试RetryGatewayFilterFactory
+            #- name: Retry
+            #    args:
+            #      #默认重试3次
+            #      retries: 3
+            #      #指定哪些状态码重试,默认5xx
+            #      series:
+            #        - SERVER_ERROR
+            #      #指定哪些状态重试,默认为空,与series至少指定一个
+            #      statuses:
+            #        - OK
+            #      #指定方法,默认GET
+            #      methods:
+            #        - GET
+            #      #指定哪些异常重试
+            #      exceptions:
+            #        - java.io.IOException

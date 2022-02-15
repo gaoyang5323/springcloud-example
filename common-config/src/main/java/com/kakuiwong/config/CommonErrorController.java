@@ -1,4 +1,4 @@
-package com.kakuiwong.common.config;
+package com.kakuiwong.config;
 
 import com.kakuiwong.entity.common.Rest;
 import org.slf4j.Logger;

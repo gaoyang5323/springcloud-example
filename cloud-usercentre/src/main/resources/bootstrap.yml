@@ -1,6 +1,6 @@
 spring:
   application:
-    name: auth
+    name: user
   profiles:
     active: test
   cloud:

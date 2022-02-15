@@ -22,7 +22,7 @@ import reactor.core.publisher.Mono;
  */
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE)
-public class SentinelFallbackHandler implements WebExceptionHandler {
+public class GatewaySentinelFallbackHandler implements WebExceptionHandler {
     private Mono<Void> writeResponse(ServerResponse response, ServerWebExchange exchange) {
         return webFluxResponseWriter(exchange.getResponse(), "请求超过最大数，请稍候再试");
     }

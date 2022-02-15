@@ -3,12 +3,14 @@ package com.kakuiwong;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 
+@EnableFeignClients
 @SpringBootApplication
-public class AuthApplicationMain {
+public class OrderApplicationMain {
 
     public static void main(String[] args) {
-        SpringApplication.run(AuthApplicationMain.class, args);
+        SpringApplication.run(OrderApplicationMain.class, args);
     }
 
 }

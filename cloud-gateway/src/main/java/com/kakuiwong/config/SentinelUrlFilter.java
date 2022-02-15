@@ -22,7 +22,7 @@ import java.util.concurrent.CopyOnWriteArraySet;
  * 限流根据url分组
  */
 @Component
-@Order(Integer.MIN_VALUE)
+@Order(Integer.MIN_VALUE + 1)
 public class SentinelUrlFilter implements GlobalFilter {
     private Set<String> uris = new CopyOnWriteArraySet<>();
 

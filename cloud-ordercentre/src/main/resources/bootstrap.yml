@@ -1,6 +1,6 @@
 spring:
   application:
-    name: gateway
+    name: order
   profiles:
     active: test
   cloud:
@@ -37,10 +37,9 @@ spring:
         ds1:
           nacos:
             server-addr: 127.0.0.1:8848
-            dataId: sentinel-gateway
+            dataId: sentinel-order
             groupId: DEFAULT_GROUP
             data-type: json
             rule-type: flow
 server:
-  port: 8080
-
+  port: 8082
