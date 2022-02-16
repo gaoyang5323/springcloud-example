@@ -10,20 +10,19 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 
 @RestController
-public class EchoController {
+public class EchoSentinelFallbackTestController {
 
     @Resource
     EchoFeign echoFeign;
 
-    @GetMapping("echo")
+    @GetMapping("retry")
     public String echo() {
         return echoFeign.echo();
     }
 
-
-    @GetMapping("echo2")
+    @GetMapping("echoTimeout")
     public String echo2() {
-        return echoFeign.echo2();
+        return echoFeign.echoTimeout();
     }
 
     /**
