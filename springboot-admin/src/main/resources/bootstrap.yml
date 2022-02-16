@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: springboot-admin-server
+  profiles:
+    active: test
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        username: nacos
+        password: nacos
+      #nacos里对应的Data Id: ${prefix}-${spring.profile.active}.${file-extension}
+      config:
+        server-addr: 127.0.0.1:8848
+        file-extension: yml
+        # 共享配置(可以多个,与其他服务共享使用nacos某个配置)
+        shared-configs[0]:
+          data-id: application-${spring.profiles.active}.yml # 配置文件名-Data Id
+          group: DEFAULT_GROUP   # 默认为DEFAULT_GROUP
+          refresh: true   # 是否动态刷新，默认为false
+server:
+  port: 8088

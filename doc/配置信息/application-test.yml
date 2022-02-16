@@ -1,4 +1,11 @@
 spring:
+  #链路追踪
+  sleuth:
+    web:
+      client:
+        enabled: true
+  zipkin:
+    base-url: http://localhost:9411
   redis:
     host: localhost
     port: 6379
@@ -25,10 +32,6 @@ feign:
       default:
         connectTimeout: 10000
         readTimeout: 10000
-      #单独服务配置
-      #user:
-      #  connectTimeout: 5000
-      #  readTimeout: 5000
   #启动GZIP压缩
   compression:
     request:
@@ -42,3 +45,6 @@ management:
     web:
       exposure:
         include: '*'
+  endpoint:
+    health:
+      show-details: ALWAYS

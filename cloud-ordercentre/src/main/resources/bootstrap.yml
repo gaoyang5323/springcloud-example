@@ -1,3 +1,5 @@
+server:
+  port: 8082
 spring:
   application:
     name: order
@@ -41,5 +43,3 @@ spring:
             groupId: DEFAULT_GROUP
             data-type: json
             rule-type: flow
-server:
-  port: 8082

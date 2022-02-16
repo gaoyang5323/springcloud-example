@@ -1,3 +1,5 @@
+server:
+  port: 8080
 spring:
   application:
     name: gateway
@@ -41,6 +43,5 @@ spring:
             groupId: DEFAULT_GROUP
             data-type: json
             rule-type: flow
-server:
-  port: 8080
+
 
