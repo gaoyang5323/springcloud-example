@@ -30,8 +30,8 @@ feign:
   client:
     config:
       default:
-        connectTimeout: 10000
-        readTimeout: 10000
+        connectTimeout: 1000
+        readTimeout: 1000
   #启动GZIP压缩
   compression:
     request:

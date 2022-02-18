@@ -9,9 +9,21 @@ spring:
           allowedMethods: '*'
           allowedOrigins: '*'
       #全局响应超时配置,默认没有超时时间
-      #httpclient:
-      #  connect-timeout: 1000
-      #  response-timeout: 1s
+      httpclient:
+        connect-timeout: 1000
+        response-timeout: 1s
+      default-filters:
+        #重试
+        - name: Retry
+          args:
+            #重试次数
+            retries: 1
+            #不指定错误码系列
+            series:
+            #500，502状态重试
+            statuses: BAD_GATEWAY,INTERNAL_SERVER_ERROR,SERVICE_UNAVAILABLE
+            #只有get接口重试
+            methods: GET
       discovery:
         locator:
           #将请求路径上的服务名配置为小写(因为服务注册的时候,向注册中心注册时将服务名转成大写)
@@ -43,20 +55,3 @@ spring:
             #表示在将请求发送到下游之前从请求中剥离的路径个数,也可以使用RewritePath;都是修改原始路径访问到下游服务;
             #- RewritePath=/auth/(?<segment>.*), /$\{segment}
             - StripPrefix=1
-            #重试RetryGatewayFilterFactory
-            #- name: Retry
-            #    args:
-            #      #默认重试3次
-            #      retries: 3
-            #      #指定哪些状态码重试,默认5xx
-            #      series:
-            #        - SERVER_ERROR
-            #      #指定哪些状态重试,默认为空,与series至少指定一个
-            #      statuses:
-            #        - OK
-            #      #指定方法,默认GET
-            #      methods:
-            #        - GET
-            #      #指定哪些异常重试
-            #      exceptions:
-            #        - java.io.IOException

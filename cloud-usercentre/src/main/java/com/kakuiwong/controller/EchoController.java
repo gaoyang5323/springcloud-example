@@ -1,5 +1,6 @@
 package com.kakuiwong.controller;
 
+import com.alibaba.nacos.client.naming.utils.RandomUtils;
 import com.kakuiwong.entity.user.UserInfo;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -16,8 +17,8 @@ public class EchoController {
 
     @GetMapping("echo2")
     public String echo2() throws InterruptedException {
-        System.out.println("echo2");
-        Thread.sleep(20000);
+        System.out.println("retry");
+        Thread.sleep(RandomUtils.nextInt(10) * 1000);
         return "this is auth2";
     }
 
